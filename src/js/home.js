@@ -119,4 +119,32 @@ function cambiarNombre(nuevoNombre) {
   //     })
 
    console.log(actionList, dramaList, animationList);
+   // .home (Selector)
+  //  $('home') Tag html llamado home
+  // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
+
+  //Container API
+  const $actionContainer = document.querySelector('#action');
+  const $dramaContainer = document.getElementById('#drama');
+  const $animationContainer = document.getElementById('#animation');
+
+  // FORM
+  const $featurignContainer = document.getElementById('#featuring');
+  const $form = document.getElementById('#form');
+  const $home = document.getElementById('#home')
+
+  //MODAL
+  const $modal = document.getElementById('modal');
+  const $overlay = document.getElementById('overlay');
+  const $hideModal = document.getElementById('hide-modal');
+
+  // document.querySelector('#modal img'); BUsqueda por documento
+  const $modalTitle = $modal.querySelector('img');
+  const $modalImage = $modal.querySelector('h1');
+  const $modalDescription = $modal.querySelector('p');
+
+
+
+
+
  })()
