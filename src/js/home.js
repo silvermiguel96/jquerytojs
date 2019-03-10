@@ -119,22 +119,26 @@ function cambiarNombre(nuevoNombre) {
   //     })
 
   console.log(actionList, dramaList, animationList);
-  function videoItemTemplate(src, title) {
+  function videoItemTemplate( movie ) {
     return (`<div class="primaryPlaylistItem">
           <div class="primaryPlaylistItem-image">
-            <img src="${src}">
+            <img src="${movie.medium_cover_image}">
           </div>
         <h4 class="primaryPlaylistItem-title">
-          ${title}
+          ${movie.title}
         </h4>
       </div>`
       )
     }
   // console.log(videoItemTemplate(src, title));
+  const $actionContainer = document.querySelector('#action'); 
 
   // debugger
    actionList.data.movies.forEach( (movie) => {
     const HTMLString = videoItemTemplate(movie);
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLString;
+    $actionContainer.append(html.body.children[0]);
     console.log(HTMLString);
    })
    // .home (Selector)
@@ -142,7 +146,6 @@ function cambiarNombre(nuevoNombre) {
   // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
 
   //Container API
-  const $actionContainer = document.querySelector('#action');
   const $dramaContainer = document.getElementById('drama');
   const $animationContainer = document.getElementById('animation');
 
