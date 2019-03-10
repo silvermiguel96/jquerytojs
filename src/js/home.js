@@ -118,20 +118,38 @@ function cambiarNombre(nuevoNombre) {
   //       terrorList = data;
   //     })
 
-   console.log(actionList, dramaList, animationList);
+  console.log(actionList, dramaList, animationList);
+  function videoItemTemplate(src, title) {
+    return (`<div class="primaryPlaylistItem">
+          <div class="primaryPlaylistItem-image">
+            <img src="${src}">
+          </div>
+        <h4 class="primaryPlaylistItem-title">
+          ${title}
+        </h4>
+      </div>`
+      )
+    }
+  // console.log(videoItemTemplate(src, title));
+
+  // debugger
+   actionList.data.movies.forEach( (movie) => {
+    const HTMLString = videoItemTemplate(movie);
+    console.log(HTMLString);
+   })
    // .home (Selector)
   //  $('home') Tag html llamado home
   // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
 
   //Container API
   const $actionContainer = document.querySelector('#action');
-  const $dramaContainer = document.getElementById('#drama');
-  const $animationContainer = document.getElementById('#animation');
+  const $dramaContainer = document.getElementById('drama');
+  const $animationContainer = document.getElementById('animation');
 
   // FORM
-  const $featurignContainer = document.getElementById('#featuring');
-  const $form = document.getElementById('#form');
-  const $home = document.getElementById('#home')
+  const $featurignContainer = document.getElementById('featuring');
+  const $form = document.getElementById('form');
+  const $home = document.getElementById('home')
 
   //MODAL
   const $modal = document.getElementById('modal');
@@ -142,7 +160,16 @@ function cambiarNombre(nuevoNombre) {
   const $modalTitle = $modal.querySelector('img');
   const $modalImage = $modal.querySelector('h1');
   const $modalDescription = $modal.querySelector('p');
+  
 
+  //  '<div class="primaryPlaylistItem">' +
+  //   '<div class="primaryPlaylistItem-image">' +
+  //     '<img src='+ImageSrc+'>' +
+  //   '</div>' +
+  //   '<h4 class="primaryPlaylistItem-title">' +
+  //     Titulo de la peli
+  //   </h4>
+  //  </div>'
 
 
 
