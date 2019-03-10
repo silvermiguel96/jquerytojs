@@ -1,103 +1,3 @@
-console.log('Hola mundo!');
-
-// const varibles que no cambian en el tiempo (constantes)
-// let variables que luego podemos cambiar
-// var método anterior para definir variables
-const noCambia = "Miguealangel";
-let cambia = "Rendon";
-// Funciones son piezas de codigo que podemos cambiar
-function cambiarNombre(nuevoNombre) {
-  cambia = nuevoNombre
-}
- cambiaNombreFlecha =  (nuevoNombre) => {
-  cambia = nuevoNombre
-}
-// const getUser = new Promise(function(todoBien, todoMal) {
-//   // LLamar a un api
-//   // Set
-//   setTimeout(function() {
-//     // Esperar 4 seggundo
-//     // todoBien();
-//     todoMal('Salido Todo Mal')
-//   }, 3000);
-// });
-// const getUserTime = new Promise(function(todoBien, todoMal) {
-//   // LLamar a un api
-//   // Set
-//   setTimeout( function() {
-//     // Esperar 4 seggundo
-//     // todoBien();
-//     todoMal('Todo esta mal')
-//   }, 5000);
-// });
-
-
-// 
-// getUser
-//   .then(function() {
-//     console.log('Todo esta bien en la promesa')
-//   })
-//   .catch(function() {
-//     console.log('Todo Mal')
-//   })
-// Promise.race Carrera de promesas
-// Promise.all([
-//   getUser,
-//   getUserTime,
-// ])
-//   .then(function(message) {
-//     console.log(message);
-//   })
-//   .catch(function(message) {
-//     console.log(message);
-//   })
-// JQUERY
-
-  // $.ajax('https://randomuser.me/api/', {
-  //   method: 'GET',
-  //   success: function(data) {
-  //     console.log(data)
-  //   },
-  //   error: function(error) {
-  //     console.log(error)
-  //   }
-  // })
-// XMLHttpRequest
-
-// Javascript
-
-// fetch('https://randomuser.me/api/')
-//   .then( function(response) {
-//     // console.log(response)
-//     return response.json()
-//   })
-//   .then(function (user) {
-//     // console.log('user', user);
-//     console.log('user', user.results[0].name.first)
-//   })
-//   .catch(function(error) {
-//     console.log(error)
-//   })
-
-// Api StarWard
-// fetch('https://swapi.co/api/people')
-//   .then(function(response) {
-//     return response.json()
-//   })
-//   .then(function(user) {
-//     console.log('Person', user.results[1].name)
-//   })
-//   .catch( function(error) {
-//     console.log(error)
-//     console.error
-//   })
-// Api StartWard funcion Flecha
-// fetch('https://swapi.co/api/people')
-//   .then( response  => response.json())
-//   .then( user => console.log('Star', user.results[2].name))
-//   .catch(error => console.log(error));
-
-
   // Async Await
 
  (async function load() {
@@ -117,37 +17,58 @@ function cambiarNombre(nuevoNombre) {
   //       console.log('Terrorlist: ', data);
   //       terrorList = data;
   //     })
+  // console.log(actionList, dramaList, animationList);
 
-  console.log(actionList, dramaList, animationList);
-  function videoItemTemplate( movie ) {
+  function videoItemTemplate( movie )
+  {
     return (`<div class="primaryPlaylistItem">
-          <div class="primaryPlaylistItem-image">
-            <img src="${movie.medium_cover_image}">
-          </div>
-        <h4 class="primaryPlaylistItem-title">
-          ${movie.title}
-        </h4>
-      </div>`
+                <div class="primaryPlaylistItem-image">
+                  <img src="${movie.medium_cover_image}">
+                </div>
+                <h4 class="primaryPlaylistItem-title">
+                  ${movie.title}
+                </h4>
+             </div>`
       )
     }
   // console.log(videoItemTemplate(src, title));
-  const $actionContainer = document.querySelector('#action'); 
-
-  // debugger
-   actionList.data.movies.forEach( (movie) => {
-    const HTMLString = videoItemTemplate(movie);
-    const html = document.implementation.createHTMLDocument();
+  
+  function createTemplate(HTMLString) {
+    const html = document.implementation.createHTMLDocument(); // Funcion de html
     html.body.innerHTML = HTMLString;
-    $actionContainer.append(html.body.children[0]);
-    console.log(HTMLString);
-   })
-   // .home (Selector)
+    return html.body.children[0];
+  }
+  
+  function renderMovieList(list, $container) {
+    // actionList.data.movies. (Este es el parametro que se manda en list)
+    // if($container.children[0] !== null){
+    //   $container.children[0].remove();
+    // }
+    $container.children[0].remove();
+    list.forEach((movie) => {
+      //  debugger
+      const HTMLString = videoItemTemplate(movie);
+      const movieElement = createTemplate(HTMLString);
+      $container.append(movieElement);
+      // console.log(HTMLString);
+    });
+  };// 
+  // .home (Selector)
   //  $('home') Tag html llamado home
   // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
-
-  //Container API
+  
+  // GetListsMovies
+  
+  const $actionContainer = document.querySelector('#action'); 
+  renderMovieList(actionList.data.movies, $actionContainer);
+ 
   const $dramaContainer = document.getElementById('drama');
+  renderMovieList(dramaList.data.movies, $dramaContainer);
+
   const $animationContainer = document.getElementById('animation');
+  renderMovieList(animationList.data.movies, $animationContainer);
+  //Container API
+
 
   // FORM
   const $featurignContainer = document.getElementById('featuring');
