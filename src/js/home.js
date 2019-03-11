@@ -10,11 +10,16 @@
    const $form = document.getElementById('form');
    const $home = document.getElementById('home');
 
-   $form.addEventListener('submit', (event) => {
-     event.preventDefault();
-     $home.classList.add('search-active');
-   })
+  //  $form.addEventListener('submit', (event) => {
+  //    event.preventDefault();
+  //    $home.classList.add('search-active');
+  //  })
 
+  $form.addEventListener('submit' , (event) => {
+    event.preventDefault(); // Sirve para mirar el cambio o envio de informacion.
+
+
+  })
    const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action');
    const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama');
    const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
@@ -51,6 +56,12 @@
       showModal()
     })
   }
+  // function addEventClick($element) {
+  //   $element.addEventListener('click', () => {
+  //     alert('Click');
+  //   })
+  //   // $('div').on('click', function())
+  // }
   function renderMovieList(list, $container) {
     // actionList.data.movies. (Este es el parametro que se manda en list)
     // if($container.children[0] !== null){
@@ -105,6 +116,7 @@ function showModal() {
 function hideModal() {
   $overlay.classList.remove('active');
   $modal.style.animation = 'modalOut .8s forwards';
+
 }
   //  '<div class="primaryPlaylistItem">' +
   //   '<div class="primaryPlaylistItem-image">' +
