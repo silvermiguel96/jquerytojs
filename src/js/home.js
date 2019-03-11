@@ -7,6 +7,13 @@
     const data = await response.json()
     return data
    }
+   const $form = document.getElementById('form');
+   const $home = document.getElementById('home');
+
+   $form.addEventListener('submit', (event) => {
+     event.preventDefault();
+     $home.classList.add('search-active');
+   })
 
    const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action');
    const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama');
@@ -39,6 +46,11 @@
     return html.body.children[0];
   }
   
+  function addEventClick($element) {
+    $element.addEventListener('click', () => {
+      showModal()
+    })
+  }
   function renderMovieList(list, $container) {
     // actionList.data.movies. (Este es el parametro que se manda en list)
     // if($container.children[0] !== null){
@@ -50,6 +62,7 @@
       const HTMLString = videoItemTemplate(movie);
       const movieElement = createTemplate(HTMLString);
       $container.append(movieElement);
+      addEventClick(movieElement);
       // console.log(HTMLString);
     });
   };// 
@@ -72,8 +85,7 @@
 
   // FORM
   const $featurignContainer = document.getElementById('featuring');
-  const $form = document.getElementById('form');
-  const $home = document.getElementById('home')
+
 
   //MODAL
   const $modal = document.getElementById('modal');
@@ -85,7 +97,15 @@
   const $modalImage = $modal.querySelector('h1');
   const $modalDescription = $modal.querySelector('p');
   
-
+function showModal() {
+  $overlay.classList.add('active');
+  $modal.style.animation = 'modalIn .8s forwards';
+}
+  $hideModal.addEventListener('click', hideModal);
+function hideModal() {
+  $overlay.classList.remove('active');
+  $modal.style.animation = 'modalOut .8s forwards';
+}
   //  '<div class="primaryPlaylistItem">' +
   //   '<div class="primaryPlaylistItem-image">' +
   //     '<img src='+ImageSrc+'>' +
