@@ -7,19 +7,33 @@
     const data = await response.json()
     return data
    }
+   // FORM
    const $form = document.getElementById('form');
    const $home = document.getElementById('home');
+   const $featurignContainer = document.getElementById('featuring');
 
-  //  $form.addEventListener('submit', (event) => {
-  //    event.preventDefault();
-  //    $home.classList.add('search-active');
-  //  })
+   function setAttributes($element, attributes) {
+    for (const attribute in attributes) {
+      $element.setAttribute(attribute, attributes[attribute]);
+    }
+   }
+   $form.addEventListener('submit', (event) => {
+     event.preventDefault();
+     $home.classList.add('search-active');
+     const $loader = document.createElement('img');
+     setAttributes($loader, {
+       src: 'src/images/loader.gif',
+       height: 50 ,
+       width: 50,
+     })
+     $featurignContainer.append($loader);
+   })
 
-  $form.addEventListener('submit' , (event) => {
-    event.preventDefault(); // Sirve para mirar el cambio o envio de informacion.
+  // $form.addEventListener('submit' , (event) => {
+  //   event.preventDefault(); // Sirve para mirar el cambio o envio de informacion.
 
 
-  })
+  // })
    const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action');
    const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama');
    const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
@@ -94,8 +108,7 @@
   //Container API
 
 
-  // FORM
-  const $featurignContainer = document.getElementById('featuring');
+
 
 
   //MODAL
