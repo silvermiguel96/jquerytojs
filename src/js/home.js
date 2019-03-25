@@ -47,9 +47,13 @@
      $featurignContainer.append($loader);
 
      const data =  new FormData($form);
-     const peli = await getData(`${BASE_API}limit=1&query_term=${data.get('name')}`);
+     const {
+       data: {
+         movies: pelis
+       }
+     } = await getData(`${BASE_API}limit=1&query_term=${data.get('name')}`);
     //  debugger
-     const HTMLString = featuringTemplate(peli.data.movies[0]);
+     const HTMLString = featuringTemplate(pelis[0]);
      $featurignContainer.innerHTML = HTMLString;
    })
 
