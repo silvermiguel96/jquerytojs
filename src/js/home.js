@@ -62,9 +62,9 @@
 
 
   // })
-   const actionList = await getData(`${BASE_API}genre=action`);
-   const dramaList = await getData(`${BASE_API}genre=drama`);
-   const animationList = await getData(`${BASE_API}genre=animation`);
+   const {data: { movies: actionList }} = await getData(`${BASE_API}genre=action`);
+   const {data: { movies: dramaList }} = await getData(`${BASE_API}genre=drama`);
+   const {data: { movies: animationList }} = await getData(`${BASE_API}genre=animation`);
   //  let terrorList;
   //   fetch('https://yts.am/api/v2/list_movies.json?genre=terror')
   //     .then(function (data) {
@@ -75,8 +75,10 @@
 
   function videoItemTemplate( movie, category )
   {
-    return (`<div class="primaryPlaylistItem" data-id="${movie.id}"  data-category="${category}">
+    return (`
+              <div class="primaryPlaylistItem" data-id="${movie.id}"  data-category=${category}>
                 <div class="primaryPlaylistItem-image" >
+                
                   <img src="${movie.medium_cover_image}">
                 </div>
                 <h4 class="primaryPlaylistItem-title">
@@ -84,6 +86,7 @@
                 </h4>
              </div>`
       )
+      // <p>${movie.id}</p>
     }
   // console.log(videoItemTemplate(src, title));
   
@@ -105,7 +108,7 @@
   //   // $('div').on('click', function())
   // }
   function renderMovieList(list, $container , category) {
-    // actionList.data.movies. (Este es el parametro que se manda en list)
+    // actionList. (Este es el parametro que se manda en list)
     // if($container.children[0] !== null){
     //   $container.children[0].remove();
     // }
@@ -126,13 +129,13 @@
   // GetListsMovies
   
   const $actionContainer = document.querySelector('#action'); 
-  renderMovieList(actionList.data.movies, $actionContainer, 'action');
+  renderMovieList(actionList, $actionContainer, 'action');
  
   const $dramaContainer = document.getElementById('drama');
-  renderMovieList(dramaList.data.movies, $dramaContainer, 'drama');
+  renderMovieList(dramaList, $dramaContainer, 'drama');
 
   const $animationContainer = document.getElementById('animation');
-  renderMovieList(animationList.data.movies, $animationContainer, 'animation');
+  renderMovieList(animationList, $animationContainer, 'animation');
   //Container API
 
 
@@ -145,15 +148,44 @@
   const $hideModal = document.getElementById('hide-modal');
 
   // document.querySelector('#modal img'); BUsqueda por documento
-  const $modalTitle = $modal.querySelector('img');
-  const $modalImage = $modal.querySelector('h1');
+  const $modalTitle = $modal.querySelector('h1');
+  const $modalImage = $modal.querySelector('img');
   const $modalDescription = $modal.querySelector('p');
-  
+
+  function findById(list, id) {
+    return list.find(movie => movie.id === parseInt(id, 10))
+  }
+  function findMovie(id, category){
+    switch (category) {
+      case 'action' : {
+        return findById(actionList, id);
+      }
+      case 'drama' : {
+        return findById(dramaList, id);
+      }
+      default: {
+        return findById(animationList, id);
+      }
+    }
+    // actionList.find((movie) => {
+    //   // debugger
+    //   // return movie.id === parseInt(id, 10)
+    // })
+  }
 function showModal($element) {
   $overlay.classList.add('active');
   $modal.style.animation = 'modalIn .8s forwards';
+  // $element.querySelector('p').textContent
+  // $0.getAttribute('data-id')
+  // $0.dataset
   const id = $element.dataset.id;
   const category = $element.dataset.category;
+  const data = findMovie(id, category);
+  
+  $modalTitle.textContent = data.title;
+  $modalImage.setAttribute('src', data.medium_cover_image);
+  $modalDescription.textContent = data.description_full;
+  debugger
 }
   $hideModal.addEventListener('click', hideModal);
 function hideModal() {
