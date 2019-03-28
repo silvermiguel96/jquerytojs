@@ -62,9 +62,7 @@
 
 
   // })
-   const {data: { movies: actionList }} = await getData(`${BASE_API}genre=action`);
-   const {data: { movies: dramaList }} = await getData(`${BASE_API}genre=drama`);
-   const {data: { movies: animationList }} = await getData(`${BASE_API}genre=animation`);
+
   //  let terrorList;
   //   fetch('https://yts.am/api/v2/list_movies.json?genre=terror')
   //     .then(function (data) {
@@ -118,10 +116,18 @@
       const HTMLString = videoItemTemplate(movie, category);
       const movieElement = createTemplate(HTMLString);
       $container.append(movieElement);
+      const image = movieElement.querySelector('img');
+      image.addEventListener('load', (event) => {
+        // movieElement.classList.add('fadeIn');
+        event.srcElement.classList.add('fadeIn');
+      })
       addEventClick(movieElement);
       // console.log(HTMLString);
     });
-  };// 
+  };
+  const {data: { movies: actionList }} = await getData(`${BASE_API}genre=action`);
+  const {data: { movies: dramaList }} = await getData(`${BASE_API}genre=drama`);
+  const {data: { movies: animationList }} = await getData(`${BASE_API}genre=animation`);
   // .home (Selector)
   //  $('home') Tag html llamado home
   // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
