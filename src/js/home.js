@@ -5,7 +5,13 @@
    async function getData(url) {
     const response = await fetch(url)
     const data = await response.json()
-    return data
+    if(data.data.movie_count > 0 ){
+      return data;
+      // Termina funcion
+    }
+    // Continua codigo
+    throw new Error('No se encontró ningun resultado');
+
    }
    // FORM
    const $form = document.getElementById('form');
@@ -47,14 +53,23 @@
      $featurignContainer.append($loader);
 
      const data =  new FormData($form);
-     const {
-       data: {
-         movies: pelis
-       }
-     } = await getData(`${BASE_API}limit=1&query_term=${data.get('name')}`);
-    //  debugger
-     const HTMLString = featuringTemplate(pelis[0]);
-     $featurignContainer.innerHTML = HTMLString;
+     try {
+      const {
+        data: {
+          movies: pelis
+        }
+      } = await getData(`${BASE_API}limit=1&query_term=${data.get('name')}`);
+     //  debugger
+      const HTMLString = featuringTemplate(pelis[0]);
+      $featurignContainer.innerHTML = HTMLString;
+     }catch(error) {
+      // debugger
+      // error consola
+      alert(error.message);
+      $loader.remove();
+      $home.classList.remove('search-active');
+     }
+
    })
 
   // $form.addEventListener('submit' , (event) => {
@@ -125,21 +140,21 @@
       // console.log(HTMLString);
     });
   };
-  const {data: { movies: actionList }} = await getData(`${BASE_API}genre=action`);
-  const {data: { movies: dramaList }} = await getData(`${BASE_API}genre=drama`);
-  const {data: { movies: animationList }} = await getData(`${BASE_API}genre=animation`);
   // .home (Selector)
   //  $('home') Tag html llamado home
   // const $home = $('.home  .list #item'); // Se le asign los $ en la variable para saber que es un selector.
   
   // GetListsMovies
   
+  const {data: { movies: actionList }} = await getData(`${BASE_API}genre=action`);
   const $actionContainer = document.querySelector('#action'); 
   renderMovieList(actionList, $actionContainer, 'action');
- 
+  
+  const {data: { movies: dramaList }} = await getData(`${BASE_API}genre=drama`);
   const $dramaContainer = document.getElementById('drama');
   renderMovieList(dramaList, $dramaContainer, 'drama');
-
+  
+  const {data: { movies: animationList }} = await getData(`${BASE_API}genre=animation`);
   const $animationContainer = document.getElementById('animation');
   renderMovieList(animationList, $animationContainer, 'animation');
   //Container API
